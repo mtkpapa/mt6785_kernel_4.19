@@ -707,6 +707,8 @@ endif
 endif
 endif
 
+KBUILD_CFLAGS  += -Wno-default-const-init-field-unsafe -Wno-default-const-init-var-unsafe -Wno-implicit-enum-enum-cast
+
 # Tell gcc to never replace conditional load with a non-conditional one
 KBUILD_CFLAGS	+= $(call cc-option,--param=allow-store-data-races=0)
 KBUILD_CFLAGS	+= $(call cc-option,-fno-allow-store-data-races)
