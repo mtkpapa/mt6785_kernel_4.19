@@ -50,6 +50,18 @@ $(warning Detected assembler with broken .inst; disassembly will be unreliable)
 endif
 
 KBUILD_CFLAGS	+= -mgeneral-regs-only $(lseinstr) $(brokengasinst) $(compat_vdso)
+
+ifeq ($(cc-name),clang)
+KBUILD_CFLAGS   += -mcpu=cortex-a55
+KBUILD_AFLAGS   += -mcpu=cortex-a55
+ifeq ($(ld-name), lld)
+KBUILD_LDFLAGS  += -mllvm -mcpu=cortex-a55
+endif
+else
+KBUILD_CFLAGS   += -mcpu=cortex-a76.cortex-a55
+KBUILD_AFLAGS   += -mcpu=cortex-a76.cortex-a55
+endif
+
 KBUILD_CFLAGS	+= -fno-asynchronous-unwind-tables
 KBUILD_CFLAGS	+= $(call cc-disable-warning, psabi)
 KBUILD_AFLAGS	+= $(lseinstr) $(brokengasinst) $(compat_vdso)
