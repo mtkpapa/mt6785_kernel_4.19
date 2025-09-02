@@ -38,7 +38,7 @@ git clone https://github.com/mtkpapa/AnyKernel3 -b rosemary-4.19
 
 if [ $KSU_E -eq 1 ]; then
     echo "Downloading KernelSU-Next"
-    curl -LSs "https://raw.githubusercontent.com/mtkpapa/KernelSU-Next/next-susfs/kernel/setup.sh" | bash -s next-susfs
+    curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -
 else 
     echo "Building without KernelSU-Next"
 fi
@@ -51,39 +51,9 @@ make "${MAKE_ARGS[@]}" rosemary_defconfig
 sed -i "s/${local_version_str}/${local_version_date_str}/g" out/.config
 
 if [ $KSU_E -eq 1 ]; then
-    scripts/config --file out/.config -e KSU \
-    -e KSU_SUSFS_HAS_MAGIC_MOUNT \
-    -d KSU_SUSFS_SUS_PATH \
-    -e KSU_SUSFS_SUS_MOUNT \
-    -e KSU_SUSFS_AUTO_ADD_SUS_KSU_DEFAULT_MOUNT \
-    -e KSU_SUSFS_AUTO_ADD_SUS_BIND_MOUNT \
-    -e KSU_SUSFS_SUS_KSTAT \
-    -d KSU_SUSFS_SUS_OVERLAYFS \
-    -e KSU_SUSFS_TRY_UMOUNT \
-    -e KSU_SUSFS_AUTO_ADD_TRY_UMOUNT_FOR_BIND_MOUNT \
-    -e KSU_SUSFS_SPOOF_UNAME \
-    -e KSU_SUSFS_ENABLE_LOG \
-    -e KSU_SUSFS_HIDE_KSU_SUSFS_SYMBOLS \
-    -e KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG \
-    -d KSU_SUSFS_OPEN_REDIRECT \
-    -d KSU_SUSFS_SUS_SU
+    scripts/config --file out/.config -e KSU
 else
-scripts/config --file out/.config -d KSU \
-    -d KSU_SUSFS_HAS_MAGIC_MOUNT \
-    -d KSU_SUSFS_SUS_PATH \
-    -d KSU_SUSFS_SUS_MOUNT \
-    -d KSU_SUSFS_AUTO_ADD_SUS_KSU_DEFAULT_MOUNT \
-    -d KSU_SUSFS_AUTO_ADD_SUS_BIND_MOUNT \
-    -d KSU_SUSFS_SUS_KSTAT \
-    -d KSU_SUSFS_SUS_OVERLAYFS \
-    -d KSU_SUSFS_TRY_UMOUNT \
-    -d KSU_SUSFS_AUTO_ADD_TRY_UMOUNT_FOR_BIND_MOUNT \
-    -d KSU_SUSFS_SPOOF_UNAME \
-    -d KSU_SUSFS_ENABLE_LOG \
-    -d KSU_SUSFS_HIDE_KSU_SUSFS_SYMBOLS \
-    -d KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG \
-    -d KSU_SUSFS_OPEN_REDIRECT \
-    -d KSU_SUSFS_SUS_SU
+	scripts/config --file out/.config -d KSU
 fi
 
 make "${MAKE_ARGS[@]}" -j$(nproc --all)
