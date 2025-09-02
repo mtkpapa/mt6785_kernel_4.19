@@ -63,7 +63,7 @@ python3 mkdtboimg.py create AnyKernel3/dtbnew out/arch/arm64/boot/dts/mediatek/m
 
 echo "======= END OF BUILD ======="
 
-ZIP_NAME="OverHeat-Next-$(date "+%Y%m%d-%H%M").zip"
+ZIP_NAME="Z419-$(date "+%Y%m%d-%H%M").zip"
 
 if [ -f "out/arch/arm64/boot/Image.gz-dtb" ]; then
     echo "Image found. Build successful"
