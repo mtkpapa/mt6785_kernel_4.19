@@ -51,10 +51,10 @@ endif
 
 KBUILD_CFLAGS	+= -mgeneral-regs-only $(lseinstr) $(brokengasinst) $(compat_vdso)
 
-ifeq ($(cc-name),clang)
+ifneq ($(LLVM),)
 KBUILD_CFLAGS   += -mcpu=cortex-a55
 KBUILD_AFLAGS   += -mcpu=cortex-a55
-ifeq ($(ld-name), lld)
+ifeq ($(LD), ld.lld)
 KBUILD_LDFLAGS  += -mllvm -mcpu=cortex-a55
 endif
 else
