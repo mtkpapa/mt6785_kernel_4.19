@@ -113,7 +113,7 @@ static inline void fillin_cluster(struct cluster_info *cinfo,
 	cinfo->cpu = cpumask_any(&cinfo->pod->possible_cpus);
 
 	for_each_cpu(cpu, &pod->possible_cpus) {
-		cpu_perf = arch_scale_cpu_capacity(NULL, cpu);
+		cpu_perf = arch_scale_cpu_capacity(cpu);
 		pr_info("cpu=%d, cpu_perf=%lu\n", cpu, cpu_perf);
 		if (cpu_perf > 0)
 			break;
@@ -191,9 +191,9 @@ void init_perf_order_domains(struct perf_domain *pd)
 
 	for_each_possible_cpu(cpu) {
 		tbl = upower_get_core_tbl(cpu);
-		if (arch_scale_cpu_capacity(NULL, cpu) != tbl->row[tbl->row_num - 1].cap) {
+		if (arch_scale_cpu_capacity(cpu) != tbl->row[tbl->row_num - 1].cap) {
 			pr_info("arch_scale_cpu_capacity(%d)=%lu, tbl->row[last_idx].cap=%llu\n",
-				cpu, arch_scale_cpu_capacity(NULL, cpu),
+				cpu, arch_scale_cpu_capacity(cpu),
 				tbl->row[tbl->row_num - 1].cap);
 			topology_set_cpu_scale(cpu, tbl->row[tbl->row_num - 1].cap);
 		}
