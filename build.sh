@@ -64,6 +64,7 @@ python3 mkdtboimg.py create AnyKernel3/dtbnew out/arch/arm64/boot/dts/mediatek/m
 echo "======= END OF BUILD ======="
 
 ZIP_NAME="Z419-$(date "+%Y%m%d-%H%M").zip"
+KOUT_PATH="/mnt/d/users/juan/kernels/rosemary/"
 
 if [ -f "out/arch/arm64/boot/Image.gz-dtb" ]; then
     echo "Image found. Build successful"
@@ -71,7 +72,7 @@ if [ -f "out/arch/arm64/boot/Image.gz-dtb" ]; then
 	cp ../out/arch/arm64/boot/Image.gz-dtb Image.gz-dtb
 	zip -r9 ../$ZIP_NAME -- *
 	cd ..
-	cp $ZIP_NAME ./
+	cp $ZIP_NAME $KOUT_PATH
 	rm -rf $ZIP_NAME
 else
     echo "Image not found. Build failed!"
